@@ -41,10 +41,11 @@ public class TestPublica extends JFrame implements MouseListener {
      * período, foi implementado um sistema de salvamento de dados em um arquivo
      * xml.
      *
-     * Maria não pode errar ao informar os dados! Uma vez inserida a informação
-     * não foi implementada edição ou exclusão de dados! Igualmente Maria tem
-     * que se esforçar para visualizar a tabela, pois não tem gráfico exibindo
-     * sua progressão.
+     * Maria pode errar ao informar os dados, pois foi implementada edição ou 
+     * exclusão de dados!
+     * 
+     * Porém Maria tem que se esforçar para visualizar a tabela, pois não tem 
+     * gráfico exibindo sua progressão.
      *
      */
     public TestPublica() {
@@ -130,7 +131,7 @@ public class TestPublica extends JFrame implements MouseListener {
                 fileSave = new ATDJ("duhh");
                 new trace("implementar");
             } catch (Exception errr) {
-                new trace("deu ruim!\n" + errr);
+                new trace("Deu ruim!\n" + errr);
             }
         }
 
@@ -165,11 +166,11 @@ public class TestPublica extends JFrame implements MouseListener {
                     if (jogo == (myTable.lenght + 1)) {
                         bJo = true;
                     } else if (jogo > (myTable.lenght + 1)) {
-                        
+
                         JOptionPane.showMessageDialog(this, "O ultimo jogo cadastrado foi o de número " + (myTable.lenght) + "\nFavor cadastre os jogos anteriores à este");
                     } else {
                         String str = "Deseja editar o placar do jogo " + jogo + "?";
-                        int n = JOptionPane.showConfirmDialog(myTable, str, "Atenção",JOptionPane.YES_NO_OPTION);
+                        int n = JOptionPane.showConfirmDialog(myTable, str, "Atenção", JOptionPane.YES_NO_OPTION);
                         if (n == JOptionPane.YES_OPTION) {
                             bJo = true;
                             editing = true;
@@ -210,11 +211,10 @@ public class TestPublica extends JFrame implements MouseListener {
             }
 
         } else if (trigger.equals("btnSaveData")) {
-            new trace("hora de salvar!");
-           // ATDJ arq = new ATDJ();
-            
-            //myTable.cRec.jogos;
-
+            try {
+                fileSave.saveFile("src/TabelaDeJogos.xml", myTable.getJogos());
+            } catch (Exception ex) {
+            };
         }
     }
 

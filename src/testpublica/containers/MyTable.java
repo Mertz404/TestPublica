@@ -20,7 +20,7 @@ public class MyTable extends JPanel {
     private DefaultTableModel model;
     private JScrollPane scrollPane;
     public int lenght;
-    private Jogos jogos = new Jogos();
+    //private Jogos jogos = new Jogos();
     public ControleRecordes cRec = new ControleRecordes();
     
     /**
@@ -77,9 +77,8 @@ public class MyTable extends JPanel {
         for (int cont = 0; cont < cRec.lenght;cont++){
             addRow(cRec.getTableLineAsString(cont));
         }
-            
-        
     }
+    
     public void clearTable(){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int rowCount = model.getRowCount();
@@ -94,6 +93,9 @@ public class MyTable extends JPanel {
         addRow(cRec.getTableLineAsString(jogo-1));
         lenght++;
         
+    }
+    public Jogos getJogos(){
+        return cRec.jogos;
     }
 }
 
