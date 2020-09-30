@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import testpublica.data.ControleRecordes;
 import testpublica.xml.ATDJ;
 import testpublica.containers.MyJPanel;
+import testpublica.data.Jogos;
 import testpublica.util.trace;
 
 /**
@@ -72,11 +73,11 @@ public class TestPublica extends JFrame implements MouseListener {
         fundo.setSize(this.getWidth(), this.getHeight());
         fundo.setLayout(null);
 
-        //cRec = new ControleRecordes();
-        //Prepare Table to show Data
+        //Nomes das colunas para a tabela do app
         String[] columnNames = {"Jogo", "Placar", "mín. da Temp",
             "Máx. da Temp", "Qbr Rec. Min.",
             "Qbr. Rec. Máx."};
+        //cria e posiciona a tabela
         myTable = new MyTable(columnNames);
         myTable.setName("myTableBasquetballGames");
         myTable.setLocation(5, 65);
@@ -95,6 +96,7 @@ public class TestPublica extends JFrame implements MouseListener {
             lbl = new JLabel(rotulo[cont]);
             lbl.setName("lbl" + rotulo[cont]);
             lbl.setSize(45, 25);
+            
             lbl.setLocation(posX, posY);
             txt = new JTextField();
             txt.setName("txt" + rotulo[cont]);
@@ -103,7 +105,7 @@ public class TestPublica extends JFrame implements MouseListener {
             fundo.add(lbl);
             fundo.add(txt);
             posX += 45 + espH;
-        } //txt.setText("1");
+        } 
         JButton btn = new JButton("Confirmar");
         btn.setName("btnAdcDados");
         btn.setSize(100, 25 * 2 + espH);
@@ -113,6 +115,13 @@ public class TestPublica extends JFrame implements MouseListener {
         posX += btn.getWidth() + espH;
         btn = new JButton("Salvar");
         btn.setName("btnSaveData");
+        btn.setSize(100, 25 * 2 + espH);
+        btn.setLocation(posX, posY);
+        btn.addMouseListener(this);
+        fundo.add(btn);
+        posX += btn.getWidth() + espH;
+        btn = new JButton("Limpar");
+        btn.setName("btnClearData");
         btn.setSize(100, 25 * 2 + espH);
         btn.setLocation(posX, posY);
         btn.addMouseListener(this);
@@ -128,22 +137,23 @@ public class TestPublica extends JFrame implements MouseListener {
         } catch (Exception err) {
             new trace("Filesave not found!\nCreating a new one.");
             try {
-                fileSave = new ATDJ("duhh");
+                fileSave = new ATDJ();
+                fileSave.saveFile("src/TabelaDeJogos.xml", new Jogos());
                 new trace("implementar");
             } catch (Exception errr) {
                 new trace("Deu ruim!\n" + errr);
             }
         }
-
-        this.add(fundo);
-
+        this.setContentPane(fundo);
     }
-
+    
+    //inicializa o app
     public static void main(String[] args) {
         TestPublica x = new TestPublica();
         x.setVisible(true);
     }
 
+    //verifica eventos relacionados ao uso do mouse
     @Override
     public void mouseReleased(MouseEvent e) {
         String trigger = "";
@@ -213,6 +223,11 @@ public class TestPublica extends JFrame implements MouseListener {
         } else if (trigger.equals("btnSaveData")) {
             try {
                 fileSave.saveFile("src/TabelaDeJogos.xml", myTable.getJogos());
+            } catch (Exception ex) {
+            };
+        } else if (trigger.equals("btnClearData")) {
+            try {
+                myTable.clearData();
             } catch (Exception ex) {
             };
         }

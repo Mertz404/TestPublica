@@ -15,10 +15,22 @@ import testpublica.data.Jogos;
  * @author Marcelo
  */
 public class MyJPanel extends JPanel {
+    /**
+     * <b>Class Constructor</b><br>
+     * Cria um objeto JPanel()
+     * @see javax.swing.JPanel
+     */
     public MyJPanel() {
 
     }
 
+    /**
+     * Função getComponentByName(String name)
+     * Rotorna um objeto pelo nome.
+     * @param name String com o nome do objeto que se busca
+     * @return objeto alvo
+     * @throws IllegalArgumentException quando não localiza o objeto
+     */
     public Component getComponentByName(String name) {
         int compCont = this.getComponentCount();
         String compName = "";

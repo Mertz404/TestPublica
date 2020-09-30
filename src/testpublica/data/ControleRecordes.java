@@ -91,7 +91,10 @@ public class ControleRecordes {
             lenght++;
         }
     }
-
+    /**
+     * Recalcula os valores de recorde mínimo, recorde maximo, e quebras de recordes.<br>
+     * Função utilizada em caso de edição do conteúdo da tabela.
+     */
     public void Recalculate() {
         Tabela.clear();
         lenght = 0;

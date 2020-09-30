@@ -55,17 +55,21 @@ public class ATDJ {
      * Responásavel pelo manuseio do arquivo xml onde os dados serão armazenados
      * No arquivo, apenas os dados de índice e de placar serão armazenados Cria
      * um novo arquivo
-     * <b>Não funciona mais</b>
+     *
      * @param fileName Nome do arquivo a ser criado.
-     * @deprecated 
      */
     public ATDJ() throws ParserConfigurationException, SAXException, IOException {
         System.out.println("ao menos passei por aqui");
+        fac = DocumentBuilderFactory.newInstance();
+        builder = fac.newDocumentBuilder();
+        document = builder.newDocument();
     }
 
     /**
      * Função getSaveFileContent()<br>
-     * Reorna um objeto do tipo Jogos criado a partir dos dados armazenados no arquivo aberto.<br>
+     * Reorna um objeto do tipo Jogos criado a partir dos dados armazenados no
+     * arquivo aberto.<br>
+     *
      * @return Um objeto do tipo Jogos
      * @see testpublica.data.Jogos
      */
@@ -88,22 +92,29 @@ public class ATDJ {
     /**
      * Método saveFile(String path, Jogos jogos)<br>
      * Salva no arquivo informado o conteúdo do objeto Jogos.<br>
+     *
      * @param path caminho para o arquivo.
      * @param jogos variavel do tipo Jogos com a informação a ser salva.
      * @throws TransformerConfigurationException
      * @throws TransformerException
      * @throws ParserConfigurationException
      * @throws SAXException
-     * @throws IOException 
+     * @throws IOException
      */
     public void saveFile(String path, Jogos jogos) throws TransformerConfigurationException, TransformerException, ParserConfigurationException, SAXException, IOException {
 
-        //coleta o nodelist raiz
-        NodeList nl = document.getElementsByTagName("TabelaDeJogos");
-        //isola o elemento raiz
-        Element fdp = (Element) nl.item(0);
-        //remove o elemento raiz do arquivo
-        document.removeChild(fdp);
+        try {
+            //coleta o nodelist raiz
+            NodeList nl = document.getElementsByTagName("TabelaDeJogos");
+            //isola o elemento raiz
+            Element fdp = (Element) nl.item(0);
+            //remove o elemento raiz do arquivo
+            document.removeChild(fdp);
+        } catch (Exception ers) {
+            new trace("ATDJ - erro ao tentar carregar o elemento raiz do arquivo\n"+ers);
+            new trace(">>Provável causa do erro - criando um arquivo novo<<");
+
+        }
 
         // cria o novo elemento raiz
         Element root = document.createElement("TabelaDeJogos");
@@ -139,7 +150,8 @@ public class ATDJ {
 
     /**
      * Carrega os dados nos vetores públicos com o conteúdo do arquivo.<br>
-     * Os valores poderão ser acessados por meio dos vetores id[] e placar[].<br>
+     * Os valores poderão ser acessados por meio dos vetores id[] e
+     * placar[].<br>
      */
     public void loadData() {
 

@@ -71,6 +71,12 @@ public class MyTable extends JPanel {
         JScrollBar vertical = scrollPane.getVerticalScrollBar();
         vertical.setValue( vertical.getMaximum() );
     }
+    /**
+     * Método editTableLine(int jg, int pl)
+     * Edita linhas da tabela
+     * @param jg linha que será editada
+     * @param pl novo valor do placar
+     */
     public void editTableLine(int jg, int pl) {
         cRec.editContent(jg, pl);
         clearTable();
@@ -78,22 +84,43 @@ public class MyTable extends JPanel {
             addRow(cRec.getTableLineAsString(cont));
         }
     }
-    
+    /**
+     * Método clearTable()<br>
+     * Limpa a tabela mas não exclui o conteúdo das variáveis associadas à classe.
+     */
     public void clearTable(){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int rowCount = model.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
-        }        
+        }
+        
     }
-    
+    /**
+     * Método clearData()<br>
+     * Limpa todo conteúdo da classe.
+     */
+    public void clearData(){
+        cRec = new ControleRecordes();
+        clearTable();
+        lenght = 0;
+    }
+    /**
+     * Método para adicionar conteúdo à tabela
+     * @param jogo número do jogo
+     * @param placar placar do jogo
+     */
     public void addJogo(int jogo, int placar){
         cRec.addTableLine(jogo, placar);
         addRow(cRec.getTableLineAsString(jogo-1));
         lenght++;
         
     }
+    /**
+     * Função para obter a lista de Jogos
+     * @return lista de Jogos armazenada
+     */
     public Jogos getJogos(){
         return cRec.jogos;
     }

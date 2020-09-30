@@ -9,8 +9,8 @@ package testpublica.data;
         
         /**
          * <b>Class Constructor</b><br>
-         * Armazena as informações após o tratamento de ControleRecordes
-         * 
+         * Armazena as informações após o tratamento de ControleRecordes.<br>
+         * As informações poderão ser alteradas com getters and setters
          * @param id Índice ou jogo
          * @param pl placar do jogo
          * @param min minimo de pontos marcados 
