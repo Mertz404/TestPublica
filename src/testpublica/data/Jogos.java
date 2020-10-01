@@ -71,7 +71,10 @@ public class Jogos {
         if (jogo < lenght){
             Jogo tmp = new Jogo(jogo,placar);
             jogos.set(jogo-1, tmp);
-        }
-        
+        }        
+    }
+    public Jogo getJogo(int index){
+        Jogo jg = (Jogo)jogos.get(index);
+        return jg;
     }
 }

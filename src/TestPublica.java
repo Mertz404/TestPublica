@@ -1,6 +1,7 @@
 
 import testpublica.containers.MyTable;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.TextField;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,13 +10,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import testpublica.data.ControleRecordes;
 import testpublica.xml.ATDJ;
 import testpublica.containers.MyJPanel;
 import testpublica.data.Jogos;
+import testpublica.graphics.Cartesian;
 import testpublica.util.trace;
 
 /**
@@ -27,6 +31,7 @@ public class TestPublica extends JFrame implements MouseListener {
     MyJPanel fundo;
     MyTable myTable;
     ATDJ fileSave;
+    Cartesian cart;
 
     /**
      * <b>Class Constructor</b><br>
@@ -81,7 +86,8 @@ public class TestPublica extends JFrame implements MouseListener {
         myTable = new MyTable(columnNames);
         myTable.setName("myTableBasquetballGames");
         myTable.setLocation(5, 65);
-        myTable.setSize(600, 250);
+        myTable.setSize(600, 125);
+        //myTable.setColumnWidths(96);//myTable.getWidth()/columnNames.length);
         fundo.add(myTable);
 
         //Create hud to insert data
@@ -126,7 +132,7 @@ public class TestPublica extends JFrame implements MouseListener {
         btn.setLocation(posX, posY);
         btn.addMouseListener(this);
         fundo.add(btn);
-
+        
         // try to locate any previous saved data into xml file
         fileSave = null;
         try {
@@ -144,6 +150,18 @@ public class TestPublica extends JFrame implements MouseListener {
                 new trace("Deu ruim!\n" + errr);
             }
         }
+        
+        cart = new Cartesian(myTable.cRec.jogos,myTable.getSize());
+        cart.setLocation(5, posY+(2*espH)+btn.getHeight()+myTable.getHeight());
+        cart.setBackground(Color.darkGray);
+        JScrollPane cartSP;
+        cartSP = new JScrollPane(cart,   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        cartSP.setPreferredSize(cart.getSize());
+        
+        fundo.add(cart);
+        //Point pt = new Point(myTable.cRec.jogos.getJogo(0).jogo, myTable.cRec.jogos.getJogo(0).placar);
+        
+        
         this.setContentPane(fundo);
     }
     
@@ -211,10 +229,12 @@ public class TestPublica extends JFrame implements MouseListener {
             if (bJo && bPl) {
                 if (!editing) {
                     myTable.addJogo(jogo, placar);
+                    cart.drawNextPoint(myTable.cRec.jogos);
                     txt1.setText((jogo + 1) + "");
                     txt2.setText("");
                 } else {
                     myTable.editTableLine(jogo, placar);
+                    cart.drawNextPoint(myTable.cRec.jogos);
                     txt1.setText("");
                     txt2.setText("");
                 }

@@ -5,7 +5,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Dimension;
 import javax.swing.JScrollBar;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import testpublica.data.ControleRecordes;
 import testpublica.data.Jogo;
 import testpublica.data.Jogos;
@@ -42,13 +44,24 @@ public class MyTable extends JPanel {
         }
         
         //configura o tamanho padrão para a tabela
-        table.setPreferredScrollableViewportSize(new Dimension(600,100));
+        table.setPreferredScrollableViewportSize(new Dimension(575,100));
         table.setFillsViewportHeight(true);
         
         //adiciona a tabela em um painel com barra de rolagem
-        scrollPane = new JScrollPane(table);        
+        scrollPane = new JScrollPane(table);      
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane);
     }
+    
+        public void setColumnWidths(int width) {
+            //new trace("MyTable.setColumnWidths -> quantidade de colunas na tabela: " + table.getColumnCount());
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            
+            //new trace("MyTable.setColumnWidths -> largura de cada coluna: " + table.getColumnModel().getColumn(0).getWidth());
+        }
+    }
+    
+    
     /**
      * Adiciona uma linha ao final da tabela
      * @param str um vetor do tipo String contendo todos os dados para 
